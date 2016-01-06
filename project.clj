@@ -19,10 +19,15 @@
                  [cc.qbits/jet "0.7.1"]
                  [clj-time "0.11.0"]
                  [bouncer "1.0.0"]
+                 [reagent "0.5.1"]
                  ]
   :source-paths ["src/clj"]
   :main cljs-apps.core
-  :plugins [[lein-cljsbuild "1.1.2"]]
+  :plugins [
+            [lein-ring "0.8.13"]
+            [migratus-lein "0.1.7"]
+            [lein-cljsbuild "1.1.2"]
+            ]
   :cljsbuild {:builds
               [{:id "app"
                 :source-paths ["src/cljs"]

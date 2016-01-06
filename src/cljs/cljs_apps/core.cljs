@@ -5,8 +5,6 @@
             [bouncer.core :as b] ;; in core.clj
             [bouncer.validators :as v]
             [secretary.core :as secretary :refer-macros [defroute]]
-            [cljs-time.format :as f]
+            [reagent.core :as reagent :refer [atom render]]
             )
   (:import goog.History))
-
-(js.console.log "Hello world!")
