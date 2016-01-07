@@ -49,6 +49,7 @@ var n__5574__auto__ = a.length;
 var i = (0);
 while(true){
 if((i < n__5574__auto__)){
+<<<<<<< HEAD
 var c_6968 = (a[i]);
 if(cljs.core.truth_((c_6968["cljsIsDirty"]))){
 (c_6968["forceUpdate"])();
@@ -57,6 +58,16 @@ if(cljs.core.truth_((c_6968["cljsIsDirty"]))){
 
 var G__6969 = (i + (1));
 i = G__6969;
+=======
+var c_6046 = (a[i]);
+if(cljs.core.truth_((c_6046["cljsIsDirty"]))){
+(c_6046["forceUpdate"])();
+} else {
+}
+
+var G__6047 = (i + (1));
+i = G__6047;
+>>>>>>> origin/step1
 continue;
 } else {
 return null;
@@ -71,8 +82,13 @@ while(true){
 if((i < n__5574__auto__)){
 (a[i]).call(null);
 
+<<<<<<< HEAD
 var G__6970 = (i + (1));
 i = G__6970;
+=======
+var G__6048 = (i + (1));
+i = G__6048;
+>>>>>>> origin/step1
 continue;
 } else {
 return null;
@@ -173,10 +189,17 @@ reagent.impl.batching.do_after_flush.call(null,f);
 return reagent.impl.batching.render_queue.schedule();
 });
 reagent.impl.batching.is_reagent_component = (function reagent$impl$batching$is_reagent_component(c){
+<<<<<<< HEAD
 var G__6972 = c;
 var G__6972__$1 = (((G__6972 == null))?null:(G__6972["props"]));
 var G__6972__$2 = (((G__6972__$1 == null))?null:(G__6972__$1["argv"]));
 return G__6972__$2;
+=======
+var G__6050 = c;
+var G__6050__$1 = (((G__6050 == null))?null:(G__6050["props"]));
+var G__6050__$2 = (((G__6050__$1 == null))?null:(G__6050__$1["argv"]));
+return G__6050__$2;
+>>>>>>> origin/step1
 });
 reagent.impl.batching.run_reactively = (function reagent$impl$batching$run_reactively(c,run){
 if(cljs.core.truth_(reagent.impl.batching.is_reagent_component.call(null,c))){
@@ -205,8 +228,13 @@ return reagent.ratom.run.call(null,rat);
 }
 });
 reagent.impl.batching.dispose = (function reagent$impl$batching$dispose(c){
+<<<<<<< HEAD
 var G__6974_6975 = (c["cljsRatom"]);
 var G__6974_6976__$1 = (((G__6974_6975 == null))?null:reagent.ratom.dispose_BANG_.call(null,G__6974_6975));
+=======
+var G__6052_6053 = (c["cljsRatom"]);
+var G__6052_6054__$1 = (((G__6052_6053 == null))?null:reagent.ratom.dispose_BANG_.call(null,G__6052_6053));
+>>>>>>> origin/step1
 
 return reagent.impl.batching.mark_rendered.call(null,c);
 });
