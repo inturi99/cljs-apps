@@ -53,14 +53,30 @@
 
 ;; -----------------------------------------------------------------------------
 ;; declared input-elements
-(defn email-form
-  [email-address-atom]
+(defn email-form  [email-atom]
   (input-and-prompt  "email"
                      "email"
                      "email"
-                     email-address-atom
-                     [prompt-message "What's your email?"]
+                     email-atom
+                     (prompt-message "What's your email?")
                      true))
+
+(defn name-form  [name-atom]
+  (input-and-prompt  "name"
+                     "name"
+                     "text"
+                     name-atom
+                     (prompt-message "What's your name?")
+                     true))
+
+(defn password-form  [password-atom]
+  (input-and-prompt  "password"
+                     "password"
+                     "password"
+                     password-atom
+                     (prompt-message "What's your password?")
+                     true))
+
 
 
 ;; ------------------------------------------------------------------------------
@@ -68,16 +84,20 @@
 
 (defn home-page []
   ;; we define a email-address as an atom right here
-  (let [email-address (reagent/atom nil)]
+  (let [email-address (reagent/atom nil)
+        name (reagent/atom nil)
+        password (reagent/atom nil)]
     (fn []
       [:div.container
        [:div.signup-form
         [:h2 "Simple login-form"]
         [:form
          ;;we the email-input component here
-         [email-form email-address]]]])))
+         [email-form email-address]
+         [name-form name]
+         [password-form password]]]])))
 
-;; ---------------------------------------------------------------------------------
+;; ------------------------------------------------------------------------------
 ;; Rendering
 
 (defn render-simple []
