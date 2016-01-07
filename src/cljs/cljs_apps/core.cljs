@@ -50,6 +50,46 @@
    [:div {:class "prompt message-animation"} [:p message]]])
 
 
+;; Finally, notice that password-form, input-form etc.
+;; aren’t in a form-group class. Let’s fix that. We create the following function:
+(defn wrap-as-element-in-form
+  [element]
+  [:div {:class="row form-group"}
+   element])
+
+
+;;-------------------------------------------------------------------------------
+;;Applying Additional validation on the password
+
+(defn check-nil-then-predicate
+  "Check if the value is nil, then apply the predicate"
+  [value predicate]
+  (if (nil? value)
+    false
+    (predicate value)))
+
+(defn eight-or-more-characters?
+  [word]
+  (check-nil-then-predicate word (fn [arg] (> count arg) 7)))
+
+(defn has-special-character?
+  [word]
+  (check-nil-then-predicate word (fn [arg]
+                                   (boolean (first (re-seq #"\w+" arg))))))
+
+(defn has-number?
+  [word]
+  (check-nil-then-predicate word (fn [arg]
+                                   (boolean (re-seq #"\d+" arg)))))
+
+(defn password-requirements
+  "A list to describe which password requirements have been met so far"
+  [password requirements]
+  [:div
+   [:ul (->> requirements
+             (filter (fn [req] (not ((:check-fn req) @password))))
+             (doall)
+             (map (fn [req] ^{:key req} [:li (:message req)])))]])
 
 ;; -----------------------------------------------------------------------------
 ;; declared input-elements
@@ -69,13 +109,21 @@
                      (prompt-message "What's your name?")
                      true))
 
-(defn password-form  [password-atom]
-  (input-and-prompt  "password"
-                     "password"
-                     "password"
-                     password-atom
-                     (prompt-message "What's your password?")
-                     true))
+(defn password-form
+  [password]
+  (let [password-type-atom (reagent/atom "password")]
+    (fn []
+      [:div
+       [(input-and-prompt  "password"
+                           "password"
+                           @password-type-atom
+                           password
+                           (prompt-message "What's your password?")
+                           true)]
+       [password-requirements
+        password [{:message "8 or more characters" :check-fn eight-or-more-characters?}
+                  {:message "At least one special character" :check-fn has-special-character?}
+                  {:message "At least one number" :check-fn has-number?}]]])))
 
 
 
@@ -93,9 +141,9 @@
         [:h2 "Simple login-form"]
         [:form
          ;;we the email-input component here
-         [email-form email-address]
-         [name-form name]
-         [password-form password]]]])))
+         (wrap-as-element-in-form [email-form email-address] )
+         (wrap-as-element-in-form [name-form name])
+         (wrap-as-element-in-form [password-form password])]]])))
 
 ;; ------------------------------------------------------------------------------
 ;; Rendering
