@@ -29,7 +29,7 @@
 
 (defn input-and-prompt
   "Creates an input box and a prompt box that appears above the input comes into focus."
-  [label-value input-name input-type input-element-arg prompt-element]
+  [label-value input-name input-type input-element-arg prompt-element required?]
   (let [input-focus (reagent/atom false)]
     (fn []
       [:div
@@ -37,7 +37,10 @@
        (if @input-focus
          prompt-element
          [:div])
-       [input-element input-name input-name input-type input-element-arg input-focus]])))
+       [input-element input-name input-name input-type input-element-arg input-focus]
+       (if (and required? (= "" @input-element-arg))
+         [:div [:code  "Field is required!"]]
+         [:div])])))
 
 ;; prompt-message
 (defn prompt-message
@@ -56,7 +59,8 @@
                      "email"
                      "email"
                      email-address-atom
-                     [prompt-message "What's your email?"]))
+                     [prompt-message "What's your email?"]
+                     true))
 
 
 ;; ------------------------------------------------------------------------------
