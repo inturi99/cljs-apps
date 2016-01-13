@@ -10,15 +10,13 @@
   (:import goog.History))
 
 
-
-
 (defn validator [data-set]
   (first (b/validate data-set
-                     :user-name [[v/required :message "filed is required"]
+                     :user-name [[v/required :message "Filed is required"]
                                  [v/string :message "Enter valid user name"]]
-                     :email [[v/required :message "file is required"]
+                     :email [[v/required :message "Filed is required"]
                              [v/email :message "Enter valid email-id"]]
-                     :password [[v/required :message "filed is required"]
+                     :password [[v/required :message "Filed is required"]
                                 [v/string  :message "Enter valid password"]])))
 
 
@@ -26,12 +24,11 @@
   [:input#id.form-control {:type ttype
                            :value (@data-set id)
                            :on-change #(swap! data-set assoc id (-> % .-target .-value))
-                           ;; :on-focus #(swap! in-focus not)
-                           :on-blur  #(swap! in-focus not)
+                           :on-blur  #(reset! in-focus "on")
                            }])
 
 (defn input-validate [id label ttype data-set]
-  (let [input-focus (reagent/atom false)]
+  (let [input-focus (reagent/atom nil)]
     (fn []
       [:div
        [:label label]
@@ -39,26 +36,30 @@
        (if @input-focus
          (if (= nil (validator @data-set))
            [:div]
-           [:div (str (first ((validator @data-set) id)))])
+           [:div {:style  {:color "red"}}
+            (str (first ((validator @data-set) id)))]  )
          [:div])
        ])))
 
 
 
 (defn home []
-  (let [my-data (reagent/atom  {:user-name nil :email nil :password nil})]
+  (let [my-data (reagent/atom  { })]
     (fn []
       [:div.container
-       [input-validate :user-name "User name" "text"  my-data ]
+       [:div.page-header
+        [:h2 "Form validation using Bouncer Library"]]
+       [input-validate :user-name "User name" "text"  my-data]
        [input-validate :email "email-id" "email" my-data]
        [input-validate :password "Password" "password" my-data]
-       [:button {:type "button"
-                 :on-click  (fn []
-                              (if (= nil (validator @my-data))
-                                (js/alert "You are successfully Registered")
-                                (js/alert "please enter valid inputs")))
-                 }
-        "Submit"]])))
+       [:button.btn.btn-primary {:type "button"
+                                 :on-click  (fn []
+                                              (if (= nil (validator @my-data))
+                                                (js/alert "You are successfully Registered")
+                                                (js/alert "please enter valid inputs")))}
+        "Submit"]
+       [:div
+       [:label (str @my-data)]]])))
 
 
 (defn render-sample []
